@@ -1,12 +1,15 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
 
 import { userRouter } from "./routers/user-router";
 import { tokenGuard } from "./middlewares/token-guard";
 
+dotenv.config();
+
 const app = express();
-const port = 4001;
+const port = process.env.SERVER_PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
