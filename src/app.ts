@@ -20,6 +20,7 @@ app.use("/", userRouter);
 app.get("/some-resource", (req, res, next) => {
 	res.json("Hello World");
 });
+
 app.use(tokenGuard());
 
 // Protected Get
