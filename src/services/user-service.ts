@@ -18,9 +18,10 @@ export class UserService {
 	}
 
 	async register({ email, password }: UserCreationAttributes) {
-		const hash = await bcrypt.hash(password, this._saltRounds);
-		const user = await User.create({ email, password: hash });
-		return this.getUserById(user.id);
+		const hashedPassword = await bcrypt.hash(password, this._saltRounds);
+
+		const user = await User.create({ email, password: hashedPassword });
+		return user;
 	}
 
 	async login({ email }: Pick<UserAttributes, "email">) {
@@ -50,5 +51,11 @@ export class UserService {
 		return User.findByPk(id, {
 			attributes: UserService.userAttributes,
 		}) as Promise<User>;
+	}
+
+	getAllUsers() {
+		return User.findAll({
+			attributes: UserService.userAttributes,
+		}) as Promise<User[]>;
 	}
 }
