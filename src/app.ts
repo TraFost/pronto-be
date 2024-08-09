@@ -21,12 +21,13 @@ app.get("/some-resource", (req, res, next) => {
 	res.json("Hello World");
 });
 
+// Middleware to protect routes, every route after this will be protected
 app.use(tokenGuard());
 
 // Protected Get
-app.get("/some-protected-resource", (req, res, next) => {
-	res.json("Protected Hello World");
-});
+// app.get("/some-protected-resource", (req, res, next) => {
+// 	res.json("Protected Hello World");
+// });
 
 app.listen(port, () => {
 	console.log(`App is listening on port ${port}`);
