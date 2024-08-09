@@ -3,9 +3,18 @@
 		"outDir": "dist",
 		"sourceMap": true,
 		"module": "commonjs",
-		"target": "es2017",
+		"target": "ES6",
 		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true
+		"allowSyntheticDefaultImports": true,
+		"types": ["node", "jest"],
+		"moduleResolution": "node",
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"baseUrl": "./src",
+		"paths": {
+			"@/*": ["*"]
+		}
 	},
-	"include": ["src/**/*"]
+	"include": ["src/**/*.ts", "__test__"],
+	"exclude": ["node_modules"]
 }
