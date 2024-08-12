@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
 import { IncomingHttpHeaders } from "http";
-import { RequestHandler } from "express";
-import { UserService } from "../services/user-service";
+import { Request, Response, NextFunction } from "express";
+
+import { UserService } from "@/services/user-service";
 
 const userService = new UserService();
 
@@ -13,13 +13,19 @@ function getTokenFromHeaders(headers: IncomingHttpHeaders) {
 	return header.split(" ")[1];
 }
 
-export const tokenGuard: () => RequestHandler = () => (req, res, next) => {
-	const token =
-		getTokenFromHeaders(req.headers) || req.query.token || req.body.token || "";
-	const hasAccess = userService.verifyToken(token);
+export const tokenGuard =
+	async () => (req: Request, res: Response, next: NextFunction) => {
+		const token =
+			getTokenFromHeaders(req.headers) ||
+			req.query.token ||
+			req.body.token ||
+			"";
 
-	hasAccess.then((a) => {
-		if (!a) return res.status(403).send({ message: "No access" });
-		next();
-	});
-};
+		try {
+			userService.verifyToken(token);
+
+			next();
+		} catch (error) {
+			return res.status(403).send({ message: "No access" });
+		}
+	};

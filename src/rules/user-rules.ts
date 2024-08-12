@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { check } from "express-validator";
 
-import { User } from "../models/user";
+import { User } from "@/models/user";
 
 export const userRules = {
 	forRegister: [

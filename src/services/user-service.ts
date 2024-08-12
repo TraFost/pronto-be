@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-import { User, UserAttributes, UserCreationAttributes } from "../models/user";
+import { User, UserAttributes, UserCreationAttributes } from "@/models/user";
 import { Request } from "express";
 
 const SALT_ROUNDS = 12;
@@ -43,23 +43,14 @@ export class UserService {
 		const user = await User.findOne({ where: { email } });
 		if (!user) throw new Error("User not found");
 		const { id } = user;
-		const token = jwt.sign({ id, email: user.email }, this._jwtSecret);
+		const token = jwt.sign({ id, email: user.email }, this._jwtSecret, {
+			expiresIn: "30d",
+		});
 		return { token };
 	}
 
-	verifyToken(token: string): Promise<boolean> {
-		return new Promise((resolve) => {
-			jwt.verify(token, this._jwtSecret, async (err, decoded) => {
-				if (err) {
-					resolve(false);
-					return;
-				}
-
-				const userId = decoded["id"];
-				UserService._user = await User.findByPk(userId);
-				resolve(!!UserService._user);
-			});
-		});
+	verifyToken(token: string) {
+		return jwt.verify(token, this._jwtSecret);
 	}
 
 	getUserById({ query, params, body }: Request) {
