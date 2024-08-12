@@ -6,8 +6,6 @@
 
 > This is the API for the Pronto App. The API is built using Typescript, Node.js, Express, and MySQL.
 
-<hr></hr>
-
 ## Installation
 
 ```vim
