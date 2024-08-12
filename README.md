@@ -2,6 +2,8 @@
   <img src="/public/pronto-main-transparent.png?raw=true" alt="Pronto Logo" />
 </div>
 
+<h1 align="center"> Pronto App API </h1>
+
 > This is the API for the Pronto App. The API is built using Typescript, Node.js, Express, and MySQL.
 
 ## Installation
