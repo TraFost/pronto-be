@@ -5,10 +5,9 @@ dotenv.config();
 
 const db = process.env.DB_NAME;
 const username = process.env.DB_USER;
-const password = process.env.DB_PASSWORD;
 const port = process.env.DB_PORT;
 
-export const sequelize = new Sequelize(db, username, password, {
+export const sequelize = new Sequelize(db, username, "", {
 	dialect: "mysql",
 	port: parseInt(port),
 });
