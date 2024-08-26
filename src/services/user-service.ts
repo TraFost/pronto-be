@@ -7,18 +7,6 @@ import { Request } from "express";
 const SALT_ROUNDS = 12;
 
 export class UserService {
-	// !! Commented out because im binding the methods when i pass them as a callback in the router.
-	// constructor() {
-	// 	// why do we need to bind these methods? because im using each of them as a callback.
-	// 	// if i don't bind them, (this) reference will lose context. so i bind them to the instance of the class.
-	// 	// so whenever any function uses this (reference), it will refer to the instance of the class.
-	// 	this.register = this.register.bind(this);
-	// 	this.login = this.login.bind(this);
-	// 	this.verifyToken = this.verifyToken.bind(this);
-	// 	this.getUserById = this.getUserById.bind(this);
-	// 	this.getAllUsers = this.getAllUsers.bind(this);
-	// }
-
 	private readonly _saltRounds = SALT_ROUNDS;
 	private readonly _jwtSecret = process.env.JWT_SECRET;
 

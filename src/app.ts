@@ -17,12 +17,11 @@ app.use(cors());
 
 app.use("/api/v1", userRouter);
 
+app.use(tokenGuard);
+
 app.use("*", (_req, res) => {
 	res.status(404).send("Not Found");
 });
-
-// Middleware to protect routes, every route after this will be protected
-app.use(tokenGuard);
 
 app.listen(port, () => {
 	console.log(`App is listening on port ${port}`);

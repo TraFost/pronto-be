@@ -6,26 +6,42 @@ import { UserService } from "@/services/user-service";
 const userService = new UserService();
 
 function getTokenFromHeaders(headers: IncomingHttpHeaders) {
-	const header = headers.authorization as string;
-
-	if (!header) return header;
-
-	return header.split(" ")[1];
+	// const header = headers.authorization as string;
+	// console.log(header, "heador");
+	// if (!headers) return res.status(403).send({ message: "No access" });
+	// return header.split(" ")[1];
 }
 
-export const tokenGuard =
-	async () => (req: Request, res: Response, next: NextFunction) => {
-		const token =
-			getTokenFromHeaders(req.headers) ||
-			req.query.token ||
-			req.body.token ||
-			"";
+export async function tokenGuard(
+	req: Request,
+	res: Response,
+	next: NextFunction
+) {
+	const token = req.headers.authorization.split(" ")[1];
 
-		try {
-			userService.verifyToken(token);
+	if (!token) {
+		return res.status(403).send({ message: "No access" });
+	}
 
-			next();
-		} catch (error) {
-			return res.status(403).send({ message: "No access" });
-		}
-	};
+	userService.verifyToken(token);
+	next();
+}
+
+// export const tokenGuard = async (
+// 	req: Request,
+// 	res: Response,
+// 	next: NextFunction
+// ) => {
+// 	const token =
+// 		getTokenFromHeaders(req.headers) || req.query.token || req.body.token || "";
+
+// 	const verifyToken = userService.verifyToken(token);
+
+// 	console.log(verifyToken, "ok`");
+
+// 	if (verifyToken === null) {
+// 		return res.status(403).send({ message: "No access" });
+// 	}
+
+// 	next();
+// };
